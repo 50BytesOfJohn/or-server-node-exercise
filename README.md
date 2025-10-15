@@ -105,7 +105,6 @@ This will help with testing pagination, relationships, and validation rules.
 
 ---
 
-
 ## Deliverables
 
 The final repository must include:
@@ -126,3 +125,23 @@ The final repository must include:
 - A short note on key design decisions (ORM, error handling, caching, etc.)
 
 ---
+
+
+## Local Development
+
+### Docker Compose
+
+Run postgres and Redis databases via docker for local development.
+
+**Local ENV DB Credentials:**
+
+- **PostgreSQL:**
+  - Host: `localhost`
+  - Port: `5432`
+  - Database: `server_node_exercise`
+  - Username: `postgres`
+  - Password: `postgres123`
+
+- **Redis:**
+  - Host: `localhost`
+  - Port: `6379`
