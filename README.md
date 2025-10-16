@@ -8,6 +8,7 @@ The tasks range from straightforward to intermediate and potentially challenging
 ## Requirements
 
 ### Domain Model
+
 The service must manage and persist a simple domain of three entities: **Users**, **Organizations**, and **Orders**.
 
 - **User**: `id`, `firstName`, `lastName`, `email`, `organizationId`, `dateCreated`
@@ -22,15 +23,16 @@ The service must manage and persist a simple domain of three entities: **Users**
 
 Each entity must support the following endpoints:
 
-| Method | Route | Description |
-|--------|--------|-------------|
-| GET | `/api/[entity]` | Returns all items (paginated) |
-| GET | `/api/[entity]/{id}` | Returns a single item by ID |
-| POST | `/api/[entity]` | Creates a new item |
-| PUT | `/api/[entity]/{id}` | Updates an existing item |
-| DELETE | `/api/[entity]/{id}` | Deletes an item |
+| Method | Route                | Description                   |
+| ------ | -------------------- | ----------------------------- |
+| GET    | `/api/[entity]`      | Returns all items (paginated) |
+| GET    | `/api/[entity]/{id}` | Returns a single item by ID   |
+| POST   | `/api/[entity]`      | Creates a new item            |
+| PUT    | `/api/[entity]/{id}` | Updates an existing item      |
+| DELETE | `/api/[entity]/{id}` | Deletes an item               |
 
 #### Special endpoint
+
 - `GET /api/orders/{id}` — returns the order **along with** the associated user and organization.
 
 ---
@@ -39,12 +41,12 @@ Each entity must support the following endpoints:
 
 `POST` and `PUT` requests must be validated and respond with appropriate HTTP status codes.
 
-| Rule | Description |
-|------|--------------|
-| User `firstName`, `lastName` | Must not be null or whitespace |
-| Organization `name` | Must not be null or whitespace |
-| Order `totalAmount` | Must be **greater than 0** |
-| All date fields | Must occur **before** the current timestamp |
+| Rule                         | Description                                 |
+| ---------------------------- | ------------------------------------------- |
+| User `firstName`, `lastName` | Must not be null or whitespace              |
+| Organization `name`          | Must not be null or whitespace              |
+| Order `totalAmount`          | Must be **greater than 0**                  |
+| All date fields              | Must occur **before** the current timestamp |
 
 ---
 
@@ -60,12 +62,12 @@ Each entity must support the following endpoints:
 ## Seed Data
 
 Provide a simple seed script that creates:
+
 - 2 organizations
 - 10 users
 - 20 orders (with valid past dates)
 
 This will help with testing pagination, relationships, and validation rules.
-
 
 ---
 
@@ -79,7 +81,7 @@ This will help with testing pagination, relationships, and validation rules.
 3. Domain entities **must not** be directly exposed in HTTP responses.  
    Use DTOs or mapping functions.
 4. Logging:
-   - Database state changes → `info` level  
+   - Database state changes → `info` level
    - HTTP headers → `debug` level
 5. Implement **unit tests** for business logic.
 6. Deploy the service via **Docker**, including dependencies
@@ -88,6 +90,7 @@ This will help with testing pagination, relationships, and validation rules.
 ---
 
 ### Bonus Features
+
 1. **Client-side caching headers**
    - User and Organization responses: cacheable for **10 minutes**
    - Order responses: use **ETag** headers (`304 Not Modified` when valid)
@@ -98,7 +101,7 @@ This will help with testing pagination, relationships, and validation rules.
 3. **Rate limiting**
    - Limit API access per organization to **30 requests per minute**
 4. **Authentication**
-   - Implement **JWT/OAuth2** authentication  
+   - Implement **JWT/OAuth2** authentication
    - All routes require authorization except `/health`, `/readiness`, and `/swagger`
 5. **Secure configuration**
    - No hardcoded credentials in the source code (implement industry recognized security standards)
@@ -118,6 +121,7 @@ The final repository must include:
 - Unit tests
 
 ### The `README.md` must describe:
+
 - How to run the app locally
 - How to run it with Docker
 - How to access the Swagger UI
@@ -126,22 +130,10 @@ The final repository must include:
 
 ---
 
-
 ## Local Development
 
-### Docker Compose
+### Manual
 
-Run postgres and Redis databases via docker for local development.
-
-**Local ENV DB Credentials:**
-
-- **PostgreSQL:**
-  - Host: `localhost`
-  - Port: `5432`
-  - Database: `server_node_exercise`
-  - Username: `postgres`
-  - Password: `postgres123`
-
-- **Redis:**
-  - Host: `localhost`
-  - Port: `6379`
+1. Run databases using docker-compose
+2. Push DB changes using `pnpm db:migrate`
+3. (Optionally) Seed the data using `pnpm db:seed` (TODO)
