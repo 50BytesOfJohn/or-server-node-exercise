@@ -1,5 +1,26 @@
 ## Local Development
 
+### Using docker
+
+You can run the app using docker and docker compose in both development mode (with hot reload) or in release mode, which is production-like build, with automated DB and migrations for easier testing.
+
+To run dev mode: `pnpm docker:dev`.
+
+For development mode, you need to manually migrate DB schema. `cp .env.example .env && pnpm db:migrate`. You can also use `db:push` to avoid migrations while prototyping.
+
+To run in release mode: `pnpm docker:release`
+For release DB migrations runs automatically via docker compose. You don't need to do anything more.
+
+Eventually you can run docker commands manually
+
+Please note that we use `docker compose` syntax. If you support only `docker-compose`, reuse commands from `package.json` in CLI.
+
+Please note that dev and release databases are using different volumes!
+
+## TODOs
+
+- [ ] Remove unused files and test files from production builds
+
 ### Manual
 
 1. Run databases using docker-compose

@@ -1,0 +1,66 @@
+services:
+  #
+  #
+  # Use separate volumes for release version
+  #
+  #
+  postgres:
+    volumes:
+      - postgres_data_release:/var/lib/postgresql/data
+
+  redis:
+    volumes:
+      - redis_data_release:/data
+
+  #
+  #
+  # Run migrations before starting the app
+  #
+  #
+  migrate:
+    image: node:22-alpine
+    container_name: migrate-release-drizzle
+    working_dir: /app
+    depends_on:
+      postgres:
+        condition: service_healthy
+    volumes:
+      - ./:/app
+    environment:
+      DATABASE_URL: postgres://postgres:postgres123@postgres:5432/server_node_exercise
+    command: >
+      sh -c "
+        corepack enable &&
+        pnpm install --frozen-lockfile &&
+        pnpm db:migrate
+      "
+
+  #
+  #
+  # Start the app
+  #
+  #
+  app:
+    container_name: app-release
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: ["node", "/app/dist/index.js"]
+    environment:
+      NODE_ENV: production
+      PORT: 3000
+      DATABASE_URL: postgres://postgres:postgres123@postgres:5432/server_node_exercise
+      REDIS_URL: redis://redis:6379
+    ports:
+      - "3000:3000"
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+volumes:
+  postgres_data_release:
+  redis_data_release:
