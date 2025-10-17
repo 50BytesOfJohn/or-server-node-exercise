@@ -18,25 +18,23 @@ export async function listOrganizations(query: OrganizationModel.ListQuery) {
 export async function createOrganization(
   body: OrganizationModel.OrganizationInsert
 ) {
-  const dateFoundedAsDate = new Date(body.dateFounded);
-
-  const result = await db
+  const [result] = await db
     .insert(organizationsTable)
     .values({
       name: body.name,
       industry: body.industry,
-      dateFounded: dateFoundedAsDate.toISOString(),
+      dateFounded: body.dateFounded,
     })
     .returning();
 
-  return result[0];
+  return result;
 }
 
 export async function updateOrganization(
   id: string,
   body: OrganizationModel.OrganizationUpdate
-): Promise<OrganizationModel.DeleteResponse> {
-  const result = await db
+) {
+  const [result] = await db
     .update(organizationsTable)
     .set({
       name: body.name,
@@ -47,36 +45,20 @@ export async function updateOrganization(
     .where(eq(organizationsTable.id, id))
     .returning();
 
-  return {
-    data: result[0],
-  };
+  return result;
 }
 
-export async function deleteOrganization(
-  id: string
-): Promise<OrganizationModel.DeleteResponse> {
-  const result = await db
+export async function deleteOrganization(id: string) {
+  const [result] = await db
     .delete(organizationsTable)
     .where(eq(organizationsTable.id, id))
     .returning();
 
-  return {
-    data: result[0],
-  };
+  return result;
 }
 
-export async function getOrganizationById(
-  id: string
-): Promise<OrganizationModel.DetailResponse> {
-  const result = await db.query.organizationsTable.findFirst({
+export async function getOrganizationById(id: string) {
+  return await db.query.organizationsTable.findFirst({
     where: eq(organizationsTable.id, id),
   });
-
-  if (!result) {
-    throw new Error("Organization not found");
-  }
-
-  return {
-    data: result,
-  };
 }

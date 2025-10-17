@@ -14,6 +14,10 @@ export async function getOrganization(
 ): Promise<OrganizationModel.DetailResponse> {
   const organization = await repository.getOrganizationById(id);
 
+  if (!organization) {
+    throw new Error("Organization not found");
+  }
+
   return OrganizationModel.detailResponse.parse({ data: organization });
 }
 
@@ -26,18 +30,26 @@ export async function createOrganization(body: OrganizationModel.CreateBody) {
 export async function updateOrganization(
   id: string,
   body: OrganizationModel.UpdateBody
-) {
+): Promise<OrganizationModel.DeleteResponse> {
   const organization = await repository.updateOrganization(id, {
     name: body.name,
     industry: body.industry,
     dateFounded: body.dateFounded,
   });
 
+  if (!organization) {
+    throw new Error("Organization not found");
+  }
+
   return OrganizationModel.updateResponse.parse({ data: organization });
 }
 
 export async function deleteOrganization(id: string) {
   const organization = await repository.deleteOrganization(id);
+
+  if (!organization) {
+    throw new Error("Organization not found");
+  }
 
   return OrganizationModel.deleteResponse.parse({ data: organization });
 }
