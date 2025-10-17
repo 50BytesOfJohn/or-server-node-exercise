@@ -27,7 +27,11 @@ export async function updateOrganization(
   id: string,
   body: OrganizationModel.UpdateBody
 ) {
-  const organization = await repository.updateOrganization(id, body);
+  const organization = await repository.updateOrganization(id, {
+    name: body.name,
+    industry: body.industry,
+    dateFounded: body.dateFounded,
+  });
 
   return OrganizationModel.updateResponse.parse({ data: organization });
 }

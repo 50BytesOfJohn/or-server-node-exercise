@@ -35,8 +35,8 @@ export async function createOrganization(
 export async function updateOrganization(
   id: string,
   body: OrganizationModel.OrganizationUpdate
-) {
-  return db
+): Promise<OrganizationModel.DeleteResponse> {
+  const result = await db
     .update(organizationsTable)
     .set({
       name: body.name,
@@ -44,15 +44,39 @@ export async function updateOrganization(
       dateFounded: body.dateFounded,
       dateUpdated: new Date(),
     })
-    .where(eq(organizationsTable.id, id));
+    .where(eq(organizationsTable.id, id))
+    .returning();
+
+  return {
+    data: result[0],
+  };
 }
 
-export async function deleteOrganization(id: string) {
-  return db.delete(organizationsTable).where(eq(organizationsTable.id, id));
+export async function deleteOrganization(
+  id: string
+): Promise<OrganizationModel.DeleteResponse> {
+  const result = await db
+    .delete(organizationsTable)
+    .where(eq(organizationsTable.id, id))
+    .returning();
+
+  return {
+    data: result[0],
+  };
 }
 
-export async function getOrganizationById(id: string) {
-  return db.query.organizationsTable.findFirst({
+export async function getOrganizationById(
+  id: string
+): Promise<OrganizationModel.DetailResponse> {
+  const result = await db.query.organizationsTable.findFirst({
     where: eq(organizationsTable.id, id),
   });
+
+  if (!result) {
+    throw new Error("Organization not found");
+  }
+
+  return {
+    data: result,
+  };
 }

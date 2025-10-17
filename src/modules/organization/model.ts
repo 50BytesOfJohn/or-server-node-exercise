@@ -85,8 +85,7 @@ export namespace OrganizationModel {
       .regex(/^\d{4}-\d{2}-\d{2}$/, {
         message: "Date must be in YYYY-MM-DD format",
       })
-      .transform((dateString) => new Date(dateString))
-      .refine((date) => date <= new Date(), {
+      .refine((dateString) => new Date(dateString) <= new Date(), {
         message: "Date founded cannot be in the future",
       })
       .openapi({
@@ -178,8 +177,7 @@ export namespace OrganizationModel {
   // ===============================
   export type OrganizationInsert = typeof organizationsTable.$inferInsert;
 
-  export type OrganizationUpdate = Omit<
-    OrganizationInsert,
-    "id" | "dateCreated" | "dateUpdated"
+  export type OrganizationUpdate = Partial<
+    Omit<OrganizationInsert, "id" | "dateCreated" | "dateUpdated">
   >;
 }
