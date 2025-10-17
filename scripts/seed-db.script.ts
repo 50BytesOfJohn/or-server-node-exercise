@@ -9,6 +9,7 @@ import {
 } from "../src/db/schema.js";
 
 import { nanoid } from "nanoid";
+import { hashPassword } from "../src/modules/auth/utils.js";
 
 const db = drizzle(process.env.DATABASE_URL!);
 
@@ -32,13 +33,17 @@ async function seedDatabase() {
 
     // Create user
     const userId = `usr_${nanoid(21)}`;
+    const userEmail = "john.doe@acme.com";
+    const userPassword = await hashPassword(userEmail);
+
     const user = await db
       .insert(usersTable)
       .values({
         id: userId,
         firstName: "John",
         lastName: "Doe",
-        email: "john.doe@acme.com",
+        email: userEmail,
+        password: userPassword,
         organizationId: organizationId,
       })
       .returning();

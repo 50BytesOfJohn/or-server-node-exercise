@@ -14,6 +14,7 @@ export const usersTable = table(
     lastName: t.text("last_name").notNull(),
 
     email: t.text("email").notNull().unique(),
+    password: t.text("password").notNull(),
 
     organizationId: t
       .varchar("organization_id", { length: 25 })

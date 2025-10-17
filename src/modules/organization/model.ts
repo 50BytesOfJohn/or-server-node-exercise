@@ -1,4 +1,5 @@
 import { z } from "@hono/zod-openapi";
+import type { organizationsTable } from "../../db/schema.js";
 
 export namespace OrganizationModel {
   // ===============================
@@ -171,4 +172,14 @@ export namespace OrganizationModel {
   });
 
   export type UpdateResponse = z.infer<typeof updateResponse>;
+
+  // ===============================
+  // INTERNAL
+  // ===============================
+  export type OrganizationInsert = typeof organizationsTable.$inferInsert;
+
+  export type OrganizationUpdate = Omit<
+    OrganizationInsert,
+    "id" | "dateCreated" | "dateUpdated"
+  >;
 }

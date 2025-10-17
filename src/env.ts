@@ -14,6 +14,7 @@ const envSchema = z.object({
       message: "PORT must be between 1 and 65535",
     }),
   DATABASE_URL: z.url(),
+  JWT_SECRET: z.string(),
 });
 
 export const env = envSchema.parse(process.env);

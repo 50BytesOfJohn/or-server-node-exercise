@@ -3,14 +3,12 @@ import { swaggerUI } from "@hono/swagger-ui";
 
 // Controllers
 import organizationController from "./modules/organization/controller.js";
+import authController from "./modules/auth/controller.js";
 
 export function createApp() {
-  const app = new Hono();
+  const app = new Hono().basePath("/api");
 
-  app.get("/", (c) => {
-    return c.text("Hello Hono!");
-  });
-
+  app.route("/auth", authController);
   app.route("/organizations", organizationController);
 
   app.doc("/openapi.json", {
@@ -21,7 +19,7 @@ export function createApp() {
     },
   });
 
-  app.get("/swagger", swaggerUI({ url: "/openapi.json" }));
+  app.get("/swagger", swaggerUI({ url: "/api/openapi.json" }));
 
   return app;
 }

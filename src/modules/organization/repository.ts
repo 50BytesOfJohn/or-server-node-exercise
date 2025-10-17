@@ -15,7 +15,9 @@ export async function listOrganizations(query: OrganizationModel.ListQuery) {
   });
 }
 
-export async function createOrganization(body: OrganizationModel.CreateBody) {
+export async function createOrganization(
+  body: OrganizationModel.OrganizationInsert
+) {
   const dateFoundedAsDate = new Date(body.dateFounded);
 
   const result = await db
@@ -32,14 +34,15 @@ export async function createOrganization(body: OrganizationModel.CreateBody) {
 
 export async function updateOrganization(
   id: string,
-  body: OrganizationModel.UpdateBody
+  body: OrganizationModel.OrganizationUpdate
 ) {
   return db
     .update(organizationsTable)
     .set({
       name: body.name,
       industry: body.industry,
-      dateFounded: body.dateFounded?.toISOString() ?? undefined,
+      dateFounded: body.dateFounded,
+      dateUpdated: new Date(),
     })
     .where(eq(organizationsTable.id, id));
 }
