@@ -31,6 +31,7 @@
     "zod": "^4.1.12"
   },
   "devDependencies": {
+    "@testcontainers/postgresql": "^11.7.1",
     "@types/ms": "^2.1.0",
     "@types/node": "^20.11.17",
     "@types/pg": "^8.15.5",

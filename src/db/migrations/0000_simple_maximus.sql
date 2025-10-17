@@ -2,8 +2,8 @@ CREATE TABLE "orders" (
 	"id" varchar(25) PRIMARY KEY NOT NULL,
 	"order_date" timestamp DEFAULT now() NOT NULL,
 	"total_amount" numeric(10, 2) NOT NULL,
-	"user_id" uuid NOT NULL,
-	"organization_id" uuid NOT NULL,
+	"user_id" varchar(25) NOT NULL,
+	"organization_id" varchar(25) NOT NULL,
 	"date_updated" timestamp DEFAULT now() NOT NULL
 );
 --> statement-breakpoint
@@ -21,7 +21,8 @@ CREATE TABLE "users" (
 	"first_name" text NOT NULL,
 	"last_name" text NOT NULL,
 	"email" text NOT NULL,
-	"organization_id" uuid,
+	"password" text NOT NULL,
+	"organization_id" varchar(25) NOT NULL,
 	"date_created" timestamp DEFAULT now() NOT NULL,
 	"date_updated" timestamp DEFAULT now() NOT NULL,
 	CONSTRAINT "users_email_unique" UNIQUE("email")

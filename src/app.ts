@@ -5,6 +5,7 @@ import { swaggerUI } from "@hono/swagger-ui";
 import organizationController from "./modules/organization/controller.js";
 import authController from "./modules/auth/controller.js";
 import healthController from "./modules/health/controller.js";
+import userController from "./modules/user/controller.js";
 
 export function createApp() {
   const app = new Hono();
@@ -27,6 +28,7 @@ export function createApp() {
 
   api.route("/auth", authController);
   api.route("/organizations", organizationController);
+  api.route("/users", userController);
 
   app.route("/api", api);
 

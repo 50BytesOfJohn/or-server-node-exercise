@@ -16,7 +16,7 @@ const envSchema = z.object({
   DATABASE_URL: z.url(),
   JWT_SECRET: z.string(),
 });
-
+console.log(process.env.DATABASE_URL);
 export const env = envSchema.parse(process.env);
 
 export type EnvVariables = z.infer<typeof envSchema>;

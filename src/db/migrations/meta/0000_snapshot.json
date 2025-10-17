@@ -1,5 +1,5 @@
 {
-  "id": "72d3c317-3ca6-4994-88c0-64cf2dcd9945",
+  "id": "e243bd73-f5f3-4db1-b49b-7477359c1f6b",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -29,13 +29,13 @@
         },
         "user_id": {
           "name": "user_id",
-          "type": "uuid",
+          "type": "varchar(25)",
           "primaryKey": false,
           "notNull": true
         },
         "organization_id": {
           "name": "organization_id",
-          "type": "uuid",
+          "type": "varchar(25)",
           "primaryKey": false,
           "notNull": true
         },
@@ -161,11 +161,17 @@
           "primaryKey": false,
           "notNull": true
         },
+        "password": {
+          "name": "password",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
         "organization_id": {
           "name": "organization_id",
-          "type": "uuid",
+          "type": "varchar(25)",
           "primaryKey": false,
-          "notNull": false
+          "notNull": true
         },
         "date_created": {
           "name": "date_created",
