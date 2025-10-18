@@ -1,3 +1,28 @@
+## Quick Start
+
+### Prerequisites
+
+- `pnpm` installed
+- Docker (including Docker Compose) installed and running. Note: setup is using `docker compose` syntax
+
+### Setup
+
+```bash
+./scripts/setup-local.sh
+```
+
+This will copy .env.example to .env, install dependencies, and perform database migrations, by starting Postgres container and running migrations. Then it will shut down the container.
+
+After the script is completed, you can run containers and app:
+
+```bash
+docker compose up -d
+
+pnpm dev
+# Optionally (install pino-pretty globally first: `npm i -g pino-pretty`)
+pnpm dev | pino-pretty
+```
+
 ## Local Development
 
 ### Using docker
@@ -56,6 +81,24 @@ I decided to go with the testcontainers approach because I had some good memorie
 ### Note about testing
 
 I know there are different definitions of testing types, which may create some misunderstanding, etc. In my personal philosophy, unit tests are testing a single thing, and the smallest possible thing without any external services/dependencies, thus I'm against using real/in-memory databases and external things in unit tests. Though I will just say that I totally understand other approaches, and I can adjust and be flexible here ;)
+
+## Notes
+
+### Hono
+
+Recently I'm a big fan of [Elysia](https://elysiajs.com/) (You can see my Elysia inspiration in repo structure), but since exercise is about Node.js I picked Hono framework. It's my current number 2 :D. Hono recently gained some popularity, and while I worked a lot with Express, and it still has better ecosystem, Hono also has some nice libraries and helpers, and it's simple to use, with similar stuff as Express. I didn't want to use NestJS, I'm not a big fan, but it would be too long to write about it 😅.
+
+### Drizzle
+
+Drizzle is currently very popular, so this choice should no longer be a surprise. I'm not sure what's the current state of Prisma. I know they work a lot and do some good stuff. Plus DX is awesome, but I had some bad experience with speed, especially compared with Drizzle. Apart from Drizzle I also really like [kysely](https://kysely.dev/).
+
+### Zod
+
+Honestly I wouldn't choose Zod if not the ecosystem, and swagger/openapi. I prefer [valibot](https://valibot.dev/) right now, and I'm also following [ArkType](https://arktype.io/).
+
+### Cache
+
+I picked suggested LRU cache, but I added p-memoize to it, to handle promises better. This prevents additional DB calls while first one is in progress etc. I decided to go for DB cache rather than full requests, not sure about exact requirement in task, but the logic will be similar anyways, just place would be different (maybe a middleware to cache get requests globally).
 
 # Server-node Exercise
 
