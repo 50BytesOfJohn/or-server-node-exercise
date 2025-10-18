@@ -2,6 +2,8 @@ import { desc, eq } from "drizzle-orm";
 import { db } from "../../db/index.js";
 import { organizationsTable } from "../../db/schema.js";
 import { OrganizationModel } from "./model.js";
+import { logger } from "../../lib/logger.js";
+import ms from "ms";
 
 export async function listOrganizations(query: OrganizationModel.ListQuery) {
   const { page, limit } = query;
@@ -58,7 +60,15 @@ export async function deleteOrganization(id: string) {
 }
 
 export async function getOrganizationById(id: string) {
-  return await db.query.organizationsTable.findFirst({
+  logger.debug(
+    { event: "getOrganizationById", layer: "repository", id },
+    "Getting organization by id"
+  );
+
+  // Sleep for 5 seconds to demonstrate caching
+  await new Promise((resolve) => setTimeout(resolve, ms("5s")));
+
+  return db.query.organizationsTable.findFirst({
     where: eq(organizationsTable.id, id),
   });
 }

@@ -1,3 +1,5 @@
+import { NotFoundError } from "../../errors/index.js";
+import { OrganizationCache } from "./cache.js";
 import { OrganizationModel } from "./model.js";
 import * as repository from "./repository.js";
 
@@ -12,10 +14,10 @@ export async function listOrganizations(
 export async function getOrganization(
   id: string
 ): Promise<OrganizationModel.DetailResponse> {
-  const organization = await repository.getOrganizationById(id);
+  const organization = await OrganizationCache.getById(id);
 
   if (!organization) {
-    throw new Error("Organization not found");
+    throw new NotFoundError("Organization not found");
   }
 
   return OrganizationModel.detailResponse.parse({ data: organization });
@@ -38,8 +40,10 @@ export async function updateOrganization(
   });
 
   if (!organization) {
-    throw new Error("Organization not found");
+    throw new NotFoundError("Organization not found");
   }
+
+  OrganizationCache.invalidateById(id);
 
   return OrganizationModel.updateResponse.parse({ data: organization });
 }
@@ -48,8 +52,10 @@ export async function deleteOrganization(id: string) {
   const organization = await repository.deleteOrganization(id);
 
   if (!organization) {
-    throw new Error("Organization not found");
+    throw new NotFoundError("Organization not found");
   }
+
+  OrganizationCache.invalidateById(id);
 
   return OrganizationModel.deleteResponse.parse({ data: organization });
 }
