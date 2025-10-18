@@ -18,7 +18,7 @@ services:
       - "3000:3000"
     volumes:
       - .:/app
-      - ./node_modules:/app/node_modules
+      - /app/node_modules # Ignore node_modules to avoid pnpm install issues
     depends_on:
       postgres:
         condition: service_healthy
