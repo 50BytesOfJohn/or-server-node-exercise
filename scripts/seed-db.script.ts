@@ -71,4 +71,13 @@ async function seedDatabase() {
   }
 }
 
-seedDatabase();
+// Run the seeding function and handle completion
+seedDatabase()
+  .then(() => {
+    console.log("✅ Script execution completed");
+    process.exit(0);
+  })
+  .catch((error) => {
+    console.error("❌ Unhandled error in seed script:", error);
+    process.exit(1);
+  });

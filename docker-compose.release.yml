@@ -26,6 +26,7 @@ services:
         condition: service_healthy
     volumes:
       - ./:/app
+      - /app/node_modules # Ignore node_modules to avoid pnpm install issues
     environment:
       DATABASE_URL: postgres://postgres:postgres123@postgres:5432/server_node_exercise
     command: >
