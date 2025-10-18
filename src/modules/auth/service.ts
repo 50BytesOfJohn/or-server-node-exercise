@@ -1,4 +1,5 @@
 import { createUser, getUserById } from "../user/repoistory.js";
+import { AccountExistsError } from "./errors.js";
 import { AuthModel } from "./model.js";
 import * as repository from "./repository.js";
 import {
@@ -43,8 +44,7 @@ export async function signUp(body: AuthModel.SignUpBody): Promise<void> {
   const doesUserExists = await repository.userExistsByEmail(body.email);
 
   if (doesUserExists) {
-    // TODO: Add error handling
-    throw new Error("User already exists");
+    throw new AccountExistsError("Account already exists");
   }
 
   const hashedPassword = await hashPassword(body.password);

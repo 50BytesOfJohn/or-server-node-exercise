@@ -8,6 +8,7 @@ import authController from "./modules/auth/controller.js";
 import healthController from "./modules/health/controller.js";
 import userController from "./modules/user/controller.js";
 import { reqResLoggerMiddleware } from "./middleware/req-res-logger.middleware.js";
+import { errorHandlerMiddleware } from "./middleware/error-handler.middleware.js";
 
 export function createApp() {
   const app = new Hono();
@@ -35,6 +36,8 @@ export function createApp() {
   api.route("/users", userController);
 
   app.route("/api", api);
+
+  app.onError(errorHandlerMiddleware);
 
   return app;
 }
