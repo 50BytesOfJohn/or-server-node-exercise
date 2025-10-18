@@ -7,6 +7,7 @@ import organizationController from "./modules/organization/controller.js";
 import authController from "./modules/auth/controller.js";
 import healthController from "./modules/health/controller.js";
 import userController from "./modules/user/controller.js";
+import orderController from "./modules/order/controller.js";
 import { reqResLoggerMiddleware } from "./middleware/req-res-logger.middleware.js";
 import { errorHandlerMiddleware } from "./middleware/error-handler.middleware.js";
 import { globalRateLimitMiddleware } from "./middleware/global-rate-limit.middleware.js";
@@ -36,6 +37,7 @@ export function createApp() {
   api.route("/auth", authController);
   api.route("/organizations", organizationController);
   api.route("/users", userController);
+  api.route("/orders", orderController);
 
   app.route("/api", api);
 

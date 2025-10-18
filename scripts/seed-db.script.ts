@@ -50,19 +50,47 @@ async function seedDatabase() {
 
     console.log("✅ Created user:", user[0]);
 
-    // Create order
-    const orderId = `ord_${nanoid(21)}`;
-    const order = await db
+    // Create orders
+    const order1Id = `ord_${nanoid(21)}`;
+    const order1 = await db
       .insert(ordersTable)
       .values({
-        id: orderId,
+        id: order1Id,
         totalAmount: "299.99",
         userId: userId,
         organizationId: organizationId,
       })
       .returning();
 
-    console.log("✅ Created order:", order[0]);
+    console.log("✅ Created order 1:", order1[0]);
+
+    // Create second order
+    const order2Id = `ord_${nanoid(21)}`;
+    const order2 = await db
+      .insert(ordersTable)
+      .values({
+        id: order2Id,
+        totalAmount: "149.50",
+        userId: userId,
+        organizationId: organizationId,
+      })
+      .returning();
+
+    console.log("✅ Created order 2:", order2[0]);
+
+    // Create third order (different user - for testing filtering)
+    const order3Id = `ord_${nanoid(21)}`;
+    const order3 = await db
+      .insert(ordersTable)
+      .values({
+        id: order3Id,
+        totalAmount: "75.25",
+        userId: userId,
+        organizationId: organizationId,
+      })
+      .returning();
+
+    console.log("✅ Created order 3:", order3[0]);
 
     console.log("🎉 Database seeded successfully!");
   } catch (error) {

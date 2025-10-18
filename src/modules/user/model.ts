@@ -116,27 +116,29 @@ export namespace UserModel {
   // ===============================
   // PUBLIC
   // ===============================
-  export const publicItem = z.object({
-    id: z.string().openapi({
-      example: "usr_ujp9HKOcQtk-Xt9jnJLc5",
-      description: "The unique identifier for the user",
-    }),
+  export const publicItem = z
+    .object({
+      id: z.string().openapi({
+        example: "usr_ujp9HKOcQtk-Xt9jnJLc5",
+        description: "The unique identifier for the user",
+      }),
 
-    firstName: z.string().openapi({
-      example: "John",
-      description: "The first name of the user",
-    }),
+      firstName: z.string().openapi({
+        example: "John",
+        description: "The first name of the user",
+      }),
 
-    lastName: z.string().openapi({
-      example: "Doe",
-      description: "The last name of the user",
-    }),
+      lastName: z.string().openapi({
+        example: "Doe",
+        description: "The last name of the user",
+      }),
 
-    email: z.string().openapi({
-      example: "john.doe@example.com",
-      description: "The email address of the user",
-    }),
-  });
+      email: z.string().openapi({
+        example: "john.doe@example.com",
+        description: "The email address of the user",
+      }),
+    })
+    .strict(); // Prevent extra fields like password explicitly by throwing error
 
   export type PublicItem = z.infer<typeof publicItem>;
 

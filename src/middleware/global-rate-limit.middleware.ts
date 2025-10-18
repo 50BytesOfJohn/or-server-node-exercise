@@ -1,5 +1,3 @@
-import { createClient } from "redis";
-
 import type { MiddlewareHandler } from "hono";
 import { env } from "../env.js";
 

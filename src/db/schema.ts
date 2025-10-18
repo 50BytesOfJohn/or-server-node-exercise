@@ -1,3 +1,4 @@
+import { relations } from "drizzle-orm";
 import { pgEnum, pgTable as table } from "drizzle-orm/pg-core";
 import * as t from "drizzle-orm/pg-core";
 import { nanoid } from "nanoid";
@@ -67,3 +68,14 @@ export const ordersTable = table("orders", {
 
   dateUpdated: t.timestamp("date_updated").defaultNow().notNull(),
 });
+
+export const orderRelations = relations(ordersTable, ({ one }) => ({
+  user: one(usersTable, {
+    fields: [ordersTable.userId],
+    references: [usersTable.id],
+  }),
+  organization: one(organizationsTable, {
+    fields: [ordersTable.organizationId],
+    references: [organizationsTable.id],
+  }),
+}));
