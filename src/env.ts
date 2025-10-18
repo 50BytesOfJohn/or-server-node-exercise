@@ -23,10 +23,18 @@ const envSchema = z.object({
     .default("false")
     .transform((val) => val === "true"),
 
+  // Rate Limit
+  DISABLE_RATE_LIMIT: z
+    .string()
+    .default("false")
+    .transform((val) => val === "true"),
+
   DATABASE_URL: z.url(),
+  REDIS_URL: z.url(),
+
   JWT_SECRET: z.string(),
 });
-console.log(process.env.DATABASE_URL);
+
 export const env = envSchema.parse(process.env);
 
 export type EnvVariables = z.infer<typeof envSchema>;

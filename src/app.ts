@@ -9,11 +9,13 @@ import healthController from "./modules/health/controller.js";
 import userController from "./modules/user/controller.js";
 import { reqResLoggerMiddleware } from "./middleware/req-res-logger.middleware.js";
 import { errorHandlerMiddleware } from "./middleware/error-handler.middleware.js";
+import { globalRateLimitMiddleware } from "./middleware/global-rate-limit.middleware.js";
 
 export function createApp() {
   const app = new Hono();
 
   app.use(reqResLoggerMiddleware);
+  app.use(globalRateLimitMiddleware);
 
   // APP
   app.doc("/openapi.json", {

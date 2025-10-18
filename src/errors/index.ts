@@ -51,3 +51,16 @@ export const NotFoundError = BaseError.subclass("NotFoundError", {
 });
 
 export const DatabaseError = BaseError.subclass("DatabaseError");
+
+export const RateLimitExceededError = BaseError.subclass(
+  "RateLimitExceededError",
+  {
+    props: {
+      statusCode: 429,
+      response: {
+        code: "rate_limit_exceeded",
+        message: "Rate limit exceeded",
+      },
+    },
+  }
+);
