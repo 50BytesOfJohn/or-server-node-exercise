@@ -50,7 +50,7 @@ Please note that dev and release databases are using different volumes!
 
 1. Run databases using docker-compose
 2. Push DB changes using `pnpm db:migrate`
-3. (Optionally) Seed the data using `pnpm db:seed` (TODO)
+3. (Optionally) Seed the data using `pnpm db:seed`
 
 ## Testing
 
