@@ -1,14 +1,18 @@
 import { OpenAPIHono as Hono } from "@hono/zod-openapi";
 import { swaggerUI } from "@hono/swagger-ui";
+import { logger } from "hono/logger";
 
 // Controllers
 import organizationController from "./modules/organization/controller.js";
 import authController from "./modules/auth/controller.js";
 import healthController from "./modules/health/controller.js";
 import userController from "./modules/user/controller.js";
+import { reqResLoggerMiddleware } from "./middleware/req-res-logger.middleware.js";
 
 export function createApp() {
   const app = new Hono();
+
+  app.use(reqResLoggerMiddleware);
 
   // APP
   app.doc("/openapi.json", {

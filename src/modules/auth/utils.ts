@@ -1,5 +1,6 @@
 import bcrypt from "bcrypt";
 import { decode, sign, verify } from "hono/jwt";
+import ms from "ms";
 import { env } from "../../env.js";
 
 const SALT_ROUNDS = 10;
@@ -20,7 +21,7 @@ export async function generateAccessToken(
     {
       userId,
       organizationId,
-      exp: Math.floor(Date.now() / 1000) + 60 * 60 * 24 * 30,
+      exp: Math.floor(Date.now() / 1000) + Math.floor(ms("5m") / 1000),
     },
     env.JWT_SECRET
   );
@@ -28,7 +29,10 @@ export async function generateAccessToken(
 
 export async function generateRefreshToken(userId: string) {
   return await sign(
-    { userId, exp: Math.floor(Date.now() / 1000) + 60 * 5 },
+    {
+      userId,
+      exp: Math.floor(Date.now() / 1000) + Math.floor(ms("30d") / 1000),
+    },
     env.JWT_SECRET
   );
 }

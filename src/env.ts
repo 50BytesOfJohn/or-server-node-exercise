@@ -13,6 +13,9 @@ const envSchema = z.object({
     .refine((port) => port > 0 && port < 65536, {
       message: "PORT must be between 1 and 65535",
     }),
+  LOG_LEVEL: z
+    .enum(["trace", "debug", "info", "warn", "error", "fatal"])
+    .default("info"),
   DATABASE_URL: z.url(),
   JWT_SECRET: z.string(),
 });
