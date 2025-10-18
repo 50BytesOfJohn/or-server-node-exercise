@@ -16,6 +16,13 @@ const envSchema = z.object({
   LOG_LEVEL: z
     .enum(["trace", "debug", "info", "warn", "error", "fatal"])
     .default("info"),
+
+  // Cache
+  DISABLE_CACHE: z
+    .string()
+    .default("false")
+    .transform((val) => val === "true"),
+
   DATABASE_URL: z.url(),
   JWT_SECRET: z.string(),
 });
