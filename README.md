@@ -42,15 +42,19 @@ Please note that we use `docker compose` syntax. If you support only `docker-com
 
 Please note that dev and release databases are using different volumes!
 
-## TODOs
-
-- [ ] Remove unused files and test files from production builds
-
 ### Manual
 
 1. Run databases using docker-compose
 2. Push DB changes using `pnpm db:migrate`
 3. (Optionally) Seed the data using `pnpm db:seed`
+
+## Docker
+
+Build the app using Dockerfile:
+
+```bash
+docker build -t node-exercise .
+```
 
 ## Testing
 
