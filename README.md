@@ -23,6 +23,32 @@ pnpm dev
 pnpm dev | pino-pretty
 ```
 
+### Auth
+
+You will need access token to make requests to entities. If you used a seed script to seed DB, you can log in with any user, by using email as email and password, for example:
+
+```bash
+curl --request POST \
+  --url http://localhost:3000/api/auth/sign-in \
+  --header 'Content-Type: application/json' \
+  --data '{
+  "email": "john.doe@acme.com",
+  "password": "john.doe@acme.com"
+}'
+```
+
+Or, you can just sign up using `/api/auth/sign-up` endpoint. (**TIP:** Run `pnpm db:studio` to run studio and check org ID's create them etc.)
+
+### Database Studio
+
+Use drizzle db studio to browse/create data in DB easily.
+
+```bash
+pnpm db:studio
+```
+
+Open URL from the log.
+
 ## Local Development
 
 ### Using docker
