@@ -106,6 +106,10 @@ Honestly I wouldn't choose Zod if not the ecosystem, and swagger/openapi. I pref
 
 I picked suggested LRU cache, but I added p-memoize to it, to handle promises better. This prevents additional DB calls while first one is in progress etc. I decided to go for DB cache rather than full requests, not sure about exact requirement in task, but the logic will be similar anyways, just place would be different (maybe a middleware to cache get requests globally).
 
+### Biome
+
+Biome is new formatter and linter, well, not so new anymore ;), but it gains a lot of popularity recently, because of all in one tool, good defaults and speed. Lot of companies adding default support for it, also recently Next.js or Turborepo or both suggest it as format/lint tool. Decided to go with it as well here.
+
 ### Github
 
 I added some basic github actions: https://github.com/50BytesOfJohn/or-server-node-exercise/actions
