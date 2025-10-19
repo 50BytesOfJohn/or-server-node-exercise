@@ -1,4 +1,5 @@
 import { OpenAPIHono as Hono } from "@hono/zod-openapi";
+import { etag } from "hono/etag";
 
 import * as service from "./service.js";
 
@@ -9,6 +10,9 @@ import { env } from "../../env.js";
 const app = new Hono();
 
 app.use("*", jwt({ secret: env.JWT_SECRET }));
+
+app.use("/", etag());
+app.use("/:id", etag());
 
 app.openapi(routes.list, async (c) => {
   const query = c.req.valid("query");
