@@ -4,12 +4,13 @@ import { env } from "./env.js";
 
 const IS_DISABLED = env.DISABLE_CACHE;
 
+// biome-ignore lint: lint/suspicious/noExplicitAny: --
 const store = new LRUCache<string, any>(cacheConfig.lru);
 
 export const cacheAdapter = {
 	has: (key: string) => (IS_DISABLED ? false : store.has(key)),
 	get: (key: string) => (IS_DISABLED ? undefined : store.get(key)),
-	set: (key: string, val: any) => {
+	set: (key: string, val: unknown) => {
 		if (IS_DISABLED) return;
 		store.set(key, val);
 	},

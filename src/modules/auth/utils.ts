@@ -1,5 +1,5 @@
 import bcrypt from "bcrypt";
-import { decode, sign, verify } from "hono/jwt";
+import { sign, verify } from "hono/jwt";
 import ms from "ms";
 import { env } from "../../env.js";
 

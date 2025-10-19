@@ -1,6 +1,5 @@
 import { swaggerUI } from "@hono/swagger-ui";
 import { OpenAPIHono as Hono } from "@hono/zod-openapi";
-import { logger } from "hono/logger";
 import { errorHandlerMiddleware } from "./middleware/error-handler.middleware.js";
 import { globalRateLimitMiddleware } from "./middleware/global-rate-limit.middleware.js";
 import { reqResLoggerMiddleware } from "./middleware/req-res-logger.middleware.js";

@@ -1,3 +1,5 @@
+// biome-ignore-all lint: Ignore seed script
+
 import "dotenv/config";
 
 import { drizzle } from "drizzle-orm/node-postgres";

@@ -1,4 +1,4 @@
-import { and, desc, eq } from "drizzle-orm";
+import { and, desc, eq, type SQL } from "drizzle-orm";
 import { db } from "../../db/index.js";
 import { ordersTable } from "../../db/schema.js";
 import type { OrderModel } from "./model.js";
@@ -8,7 +8,8 @@ export async function listOrders(query: OrderModel.ListQuery) {
 
 	const offset = (page - 1) * limit;
 
-	let whereClause;
+	let whereClause: SQL | undefined;
+
 	if (userId && organizationId) {
 		whereClause = and(
 			eq(ordersTable.userId, userId),

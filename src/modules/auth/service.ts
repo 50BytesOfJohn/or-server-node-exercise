@@ -1,4 +1,3 @@
-import { decode, sign, verify } from "hono/jwt";
 import { createUser, getUserById } from "../user/repoistory.js";
 import { AccountExistsError } from "./errors.js";
 import type { AuthModel } from "./model.js";

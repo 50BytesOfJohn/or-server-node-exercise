@@ -1,6 +1,6 @@
 import { relations } from "drizzle-orm";
 import * as t from "drizzle-orm/pg-core";
-import { pgEnum, pgTable as table } from "drizzle-orm/pg-core";
+import { pgTable as table } from "drizzle-orm/pg-core";
 import { nanoid } from "nanoid";
 
 export const usersTable = table(

@@ -1,5 +1,4 @@
 import { z } from "@hono/zod-openapi";
-import type { usersTable } from "../../db/schema.js";
 
 export namespace AuthModel {
 	// ===============================

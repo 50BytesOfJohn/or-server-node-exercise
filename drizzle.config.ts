@@ -1,3 +1,5 @@
+// biome-ignore-all lint: Ignore drizzle config
+
 import "dotenv/config";
 
 import { defineConfig } from "drizzle-kit";

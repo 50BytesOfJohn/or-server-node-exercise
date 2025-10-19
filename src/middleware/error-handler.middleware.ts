@@ -1,4 +1,4 @@
-import type { ErrorHandler, MiddlewareHandler } from "hono";
+import type { ErrorHandler } from "hono";
 import { HTTPException } from "hono/http-exception";
 import { BaseError, UnauthorizedError, UnknownError } from "../errors/index.js";
 import { logger } from "../lib/logger.js";

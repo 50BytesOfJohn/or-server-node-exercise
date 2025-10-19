@@ -15,11 +15,11 @@ const pool = new Pool({
 });
 
 // Log database pool state changes
-pool.on("connect", (client) => {
+pool.on("connect", (_client) => {
 	logger.info({ event: "pool_connect" }, "Database client connected to pool");
 });
 
-pool.on("acquire", (client) => {
+pool.on("acquire", (_client) => {
 	logger.info(
 		{
 			event: "pool_acquire",
@@ -31,7 +31,7 @@ pool.on("acquire", (client) => {
 	);
 });
 
-pool.on("remove", (client) => {
+pool.on("remove", (_client) => {
 	logger.info(
 		{
 			event: "pool_remove",
