@@ -3,36 +3,36 @@ import "dotenv/config";
 import { z } from "zod";
 
 const envSchema = z.object({
-  NODE_ENV: z
-    .enum(["development", "production", "test"])
-    .default("development"),
-  PORT: z
-    .string()
-    .default("3000")
-    .transform((val) => parseInt(val, 10))
-    .refine((port) => port > 0 && port < 65536, {
-      message: "PORT must be between 1 and 65535",
-    }),
-  LOG_LEVEL: z
-    .enum(["trace", "debug", "info", "warn", "error", "fatal"])
-    .default("info"),
+	NODE_ENV: z
+		.enum(["development", "production", "test"])
+		.default("development"),
+	PORT: z
+		.string()
+		.default("3000")
+		.transform((val) => parseInt(val, 10))
+		.refine((port) => port > 0 && port < 65536, {
+			message: "PORT must be between 1 and 65535",
+		}),
+	LOG_LEVEL: z
+		.enum(["trace", "debug", "info", "warn", "error", "fatal"])
+		.default("info"),
 
-  // Cache
-  DISABLE_CACHE: z
-    .string()
-    .default("false")
-    .transform((val) => val === "true"),
+	// Cache
+	DISABLE_CACHE: z
+		.string()
+		.default("false")
+		.transform((val) => val === "true"),
 
-  // Rate Limit
-  DISABLE_RATE_LIMIT: z
-    .string()
-    .default("false")
-    .transform((val) => val === "true"),
+	// Rate Limit
+	DISABLE_RATE_LIMIT: z
+		.string()
+		.default("false")
+		.transform((val) => val === "true"),
 
-  DATABASE_URL: z.url(),
-  REDIS_URL: z.url(),
+	DATABASE_URL: z.url(),
+	REDIS_URL: z.url(),
 
-  JWT_SECRET: z.string(),
+	JWT_SECRET: z.string(),
 });
 
 export const env = envSchema.parse(process.env);

@@ -4,38 +4,38 @@ import { createRoute } from "@hono/zod-openapi";
 import { HealthModel } from "./model.js";
 
 export const routes = {
-  health: createRoute({
-    method: "get",
-    path: "/health",
+	health: createRoute({
+		method: "get",
+		path: "/health",
 
-    tags: ["Health"],
+		tags: ["Health"],
 
-    responses: {
-      200: {
-        content: {
-          "application/json": {
-            schema: HealthModel.healthResponse,
-          },
-        },
-        description: "Health check",
-      },
-    },
-  }),
-  readiness: createRoute({
-    method: "get",
-    path: "/readiness",
+		responses: {
+			200: {
+				content: {
+					"application/json": {
+						schema: HealthModel.healthResponse,
+					},
+				},
+				description: "Health check",
+			},
+		},
+	}),
+	readiness: createRoute({
+		method: "get",
+		path: "/readiness",
 
-    tags: ["Health"],
+		tags: ["Health"],
 
-    responses: {
-      200: {
-        description: "Readiness check",
-        content: {
-          "application/json": {
-            schema: HealthModel.readinessResponse,
-          },
-        },
-      },
-    },
-  }),
+		responses: {
+			200: {
+				description: "Readiness check",
+				content: {
+					"application/json": {
+						schema: HealthModel.readinessResponse,
+					},
+				},
+			},
+		},
+	}),
 };

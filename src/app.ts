@@ -1,47 +1,46 @@
-import { OpenAPIHono as Hono } from "@hono/zod-openapi";
 import { swaggerUI } from "@hono/swagger-ui";
+import { OpenAPIHono as Hono } from "@hono/zod-openapi";
 import { logger } from "hono/logger";
-
-// Controllers
-import organizationController from "./modules/organization/controller.js";
-import authController from "./modules/auth/controller.js";
-import healthController from "./modules/health/controller.js";
-import userController from "./modules/user/controller.js";
-import orderController from "./modules/order/controller.js";
-import { reqResLoggerMiddleware } from "./middleware/req-res-logger.middleware.js";
 import { errorHandlerMiddleware } from "./middleware/error-handler.middleware.js";
 import { globalRateLimitMiddleware } from "./middleware/global-rate-limit.middleware.js";
+import { reqResLoggerMiddleware } from "./middleware/req-res-logger.middleware.js";
+import authController from "./modules/auth/controller.js";
+import healthController from "./modules/health/controller.js";
+import orderController from "./modules/order/controller.js";
+// Controllers
+import organizationController from "./modules/organization/controller.js";
+import userController from "./modules/user/controller.js";
 
 export function createApp() {
-  const app = new Hono();
+	const app = new Hono();
 
-  app.use(reqResLoggerMiddleware);
-  app.use(globalRateLimitMiddleware);
+	app.use(reqResLoggerMiddleware);
+	app.use(globalRateLimitMiddleware);
 
-  // APP
-  app.doc("/openapi.json", {
-    openapi: "3.0.0",
-    info: {
-      version: "1.0.0",
-      title: "Server Node Exercise API",
-    },
-  });
+	// APP
+	app.doc("/openapi.json", {
+		openapi: "3.0.0",
+		info: {
+			version: "1.0.0",
+			title: "Server Node Exercise API",
+		},
+	});
 
-  app.get("/swagger", swaggerUI({ url: "/openapi.json" }));
+	app.get("/swagger", swaggerUI({ url: "/openapi.json" }));
 
-  app.route("/", healthController);
+	app.route("/", healthController);
 
-  // API
-  const api = new Hono();
+	// API
+	const api = new Hono();
 
-  api.route("/auth", authController);
-  api.route("/organizations", organizationController);
-  api.route("/users", userController);
-  api.route("/orders", orderController);
+	api.route("/auth", authController);
+	api.route("/organizations", organizationController);
+	api.route("/users", userController);
+	api.route("/orders", orderController);
 
-  app.route("/api", api);
+	app.route("/api", api);
 
-  app.onError(errorHandlerMiddleware);
+	app.onError(errorHandlerMiddleware);
 
-  return app;
+	return app;
 }
