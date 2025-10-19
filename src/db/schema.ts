@@ -14,6 +14,12 @@ export const usersTable = table(
 		firstName: t.text("first_name").notNull(),
 		lastName: t.text("last_name").notNull(),
 
+		/**
+		 * Currently single email is assigned to organization.
+		 *
+		 * I think normally this probably should be changed to composite unique index, with email and organizationId.
+		 * To allow single email to be assigned to multiple organizations.
+		 */
 		email: t.text("email").notNull().unique(),
 		password: t.text("password").notNull(),
 
@@ -39,10 +45,22 @@ export const organizationsTable = table("organizations", {
 	// I would suggest adding a slug field here for better UX with path or subdomains
 	// slug: t.text("slug").notNull().unique(),
 
+	/**
+	 * I would suggest adding a isDeleted (indexed)
+	 * and deletedAt (timestamp) field for soft delete,
+	 * rather than deleting the record.
+	 *
+	 * I wanted to implement this, but I ran out of time, and didn't want to push for this.
+	 * It's Sunday and my GF is not happy anyways :D, so just wanted to note it.
+	 */
+
 	industry: t.text("industry").notNull(),
 
 	dateFounded: t.date("date_founded").notNull(),
 
+	/**
+	 * Generally I prefer to use createdAt and updatedAt, I just followed the dateFounded field name, and forgot to change.
+	 */
 	dateCreated: t.timestamp("date_created").defaultNow().notNull(),
 	dateUpdated: t.timestamp("date_updated").defaultNow().notNull(),
 });
@@ -55,6 +73,10 @@ export const ordersTable = table("orders", {
 
 	orderDate: t.timestamp("order_date").defaultNow().notNull(),
 
+	/**
+	 * I avoided adding a validations on DB level, but not any particular reason for this,
+	 * I would generally add them, so wanted to mention it here.
+	 */
 	totalAmount: t.decimal("total_amount", { precision: 10, scale: 2 }).notNull(),
 
 	userId: t

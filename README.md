@@ -88,6 +88,8 @@ I know there are different definitions of testing types, which may create some m
 
 ## Notes
 
+I left some comments in `schema.ts` file as well, and in some files, for things I couldn't done in time. Also, mainly organization have testing etc. I believe the point was not to have 100% coverage, but to see the patterns and approach. I did all the stuff there, which can be now reproduced for other modules etc. in very similar way, but core implementation is presented.
+
 ### Hono
 
 Recently I'm a big fan of [Elysia](https://elysiajs.com/) (You can see my Elysia inspiration in repo structure), but since exercise is about Node.js I picked Hono framework. It's my current number 2 :D. Hono recently gained some popularity, and while I worked a lot with Express, and it still has better ecosystem, Hono also has some nice libraries and helpers, and it's simple to use, with similar stuff as Express. I didn't want to use NestJS, I'm not a big fan, but it would be too long to write about it 😅.
@@ -103,6 +105,10 @@ Honestly I wouldn't choose Zod if not the ecosystem, and swagger/openapi. I pref
 ### Cache
 
 I picked suggested LRU cache, but I added p-memoize to it, to handle promises better. This prevents additional DB calls while first one is in progress etc. I decided to go for DB cache rather than full requests, not sure about exact requirement in task, but the logic will be similar anyways, just place would be different (maybe a middleware to cache get requests globally).
+
+### Github
+
+I added some basic github actions: https://github.com/50BytesOfJohn/or-server-node-exercise/actions
 
 # Server-node Exercise
 

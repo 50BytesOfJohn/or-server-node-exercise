@@ -1,6 +1,6 @@
 import { afterEach, describe, expect, test, vi } from "vitest";
-import { getOrganization } from "./service.js";
 import { OrganizationCache } from "./cache.js";
+import { getOrganization } from "./service.js";
 
 describe("Organization Service", () => {
 	afterEach(() => {
